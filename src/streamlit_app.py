@@ -193,18 +193,20 @@ with tab_time:
     for caveat in CAVEATS:
         st.warning(caveat)
 
-    by_decade, overall_movie_mean = ratings_by_release_decade(ratings)
+    by_decade, overall_movie_mean = ratings_by_release_decade(filtered)
+
+    if by_decade.empty:
+        st.warning("No decades in the selected year range. Widen the filter above.")
+        st.stop()
 
     plot_df = by_decade.copy()
     plot_df["reliability"] = plot_df["small_n"].map(
         {True: "small n (< 30)", False: "reliable"}
     )
-    # Marker size scales with sqrt(n_movies) so huge decades don't dominate visually
     plot_df["marker_size"] = (plot_df["n_movies"] ** 0.5) * 4
 
     fig = go.Figure()
 
-    # Main line + markers
     fig.add_trace(
         go.Scatter(
             x=plot_df["label"],
@@ -225,12 +227,10 @@ with tab_time:
                 "Δ vs catalog: %{customdata[2]:+.2f}"
                 "<extra></extra>"
             ),
-            name="Avg rating",
             showlegend=False,
         )
     )
 
-    # Annotate each point with its rating (small text above marker)
     for x, y, n, small in zip(
         plot_df["label"], plot_df["avg_rating"], plot_df["n_movies"], plot_df["small_n"]
     ):
@@ -244,7 +244,6 @@ with tab_time:
             font=dict(size=10, color="#3b6ea5"),
         )
 
-    # Catalog mean reference line
     fig.add_hline(
         y=overall_movie_mean,
         line_dash="dash",
@@ -255,19 +254,27 @@ with tab_time:
         annotation_font_color="#c45c26",
     )
 
+    # KEY: constrain x-axis to only the decades present in the filtered data
     fig.update_layout(
         yaxis=dict(range=[2.5, 4.0], title="Average movie rating (1–5)"),
-        xaxis=dict(title="Movie release decade"),
+        xaxis=dict(
+            title="Movie release decade",
+            categoryorder="array",
+            categoryarray=list(plot_df["label"]),  # only the surviving decades
+            type="category",
+        ),
         margin=dict(l=0, r=0, t=30, b=0),
         height=500,
         hovermode="x unified",
+        transition=dict(duration=300),  # smooth re-render on filter change
     )
     st.plotly_chart(fig, use_container_width=True)
 
     st.caption(
-        "Marker size reflects the number of titles in that decade. "
-        "* / lighter markers: fewer than 30 titles. "
-        "The line is a visual aid — these are decade averages, not a continuous process."
+        f"Showing {len(plot_df)} decade{'s' if len(plot_df) != 1 else ''} "
+        f"({plot_df['label'].iloc[0]}–{plot_df['label'].iloc[-1]}). "
+        "Marker size reflects the number of titles. "
+        "* / lighter markers: fewer than 30 titles."
     )
 
 # ========== 4. Top movies ==========
@@ -345,19 +352,4 @@ with tab_top:
         "Both panels respect the filter above. Raw average is the plain per-movie mean; "
         "Bayesian shrinks thin-sample movies toward the catalog prior."
     )
-
-    with st.expander("See raw numbers"):
-        st.subheader(f"Top {TOP_N} by raw average (≥ {floor} ratings)")
-        st.caption(f"{qualified_count:,} movies qualify")
-        st.dataframe(floor_table, use_container_width=True)
-
-        st.subheader(f"Top {TOP_N} by Bayesian score (≥ {floor} ratings)")
-        st.dataframe(bayes_table, use_container_width=True)
-
-    with st.expander("JSON payload"):
-        floor_tables = {floor: floor_table}
-        qualified_counts = {floor: qualified_count}
-        st.json(
-            top_movies_payload(floor_tables, qualified_counts, bayes_table, prior_mean)
-        )
 
