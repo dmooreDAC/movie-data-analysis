@@ -287,18 +287,21 @@ with tab_time:
         )
     )
 
-    for x, y, n, small in zip(
-        plot_df["label"], plot_df["avg_rating"], plot_df["n_movies"], plot_df["small_n"]
-    ):
-        note = "*" if small else ""
-        fig.add_annotation(
-            x=x,
-            y=y,
-            text=f"{y:.2f}{note}",
-            showarrow=False,
-            yshift=14,
-            font=dict(size=10, color="#3b6ea5"),
-        )
+        # Per-point value labels only when there's room for them
+    show_point_labels = len(plot_df) <= 25
+    if show_point_labels:
+        for x, y, n, small in zip(
+            plot_df["label"], plot_df["avg_rating"], plot_df["n_movies"], plot_df["small_n"]
+        ):
+            note = "*" if small else ""
+            fig.add_annotation(
+                x=x,
+                y=y,
+                text=f"{y:.2f}{note}",
+                showarrow=False,
+                yshift=14,
+                font=dict(size=9, color="#3b6ea5"),
+            )
 
     fig.add_hline(
         y=overall_movie_mean,
@@ -310,6 +313,42 @@ with tab_time:
         annotation_font_color="#c45c26",
     )
 
+        # Legibility tuning based on how many buckets are shown ---
+    n_points = len(plot_df)
+    dense = n_points > 15        
+    very_dense = n_points > 40   
+
+
+    if very_dense:
+        nticks = 20
+        tickangle = -60
+        show_point_labels = False
+    elif dense:
+        nticks = 25
+        tickangle = -45
+        show_point_labels = True
+    else:
+        nticks = None
+        tickangle = 0
+        show_point_labels = True
+
+   
+    if not show_point_labels:
+        
+        fig.layout.annotations = [
+            a for a in fig.layout.annotations
+            if a.text and not a.text.replace("*", "").replace(".", "").isdigit()
+        ]
+
+        # Choose tick thinning + angle based on point count
+    n_points = len(plot_df)
+    if n_points > 40:
+        nticks, tickangle, height = 20, -60, 560
+    elif n_points > 15:
+        nticks, tickangle, height = 25, -45, 540
+    else:
+        nticks, tickangle, height = None, 0, 500
+
     fig.update_layout(
         yaxis=dict(range=[2.5, 4.0], title="Average movie rating (1–5)"),
         xaxis=dict(
@@ -317,11 +356,15 @@ with tab_time:
             categoryorder="array",
             categoryarray=list(by_bucket["label"]),
             type="category",
+            tickangle=tickangle,
+            nticks=nticks,
+            automargin=True,          
         ),
         margin=dict(l=0, r=0, t=30, b=0),
-        height=500,
+        height=height,
         hovermode="x unified",
         transition=dict(duration=300),
+        dragmode="pan",              
     )
     st.plotly_chart(fig, use_container_width=True)
 
