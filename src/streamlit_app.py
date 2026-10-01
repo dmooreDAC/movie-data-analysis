@@ -45,6 +45,10 @@ st.caption(
     f"{ratings['movie_id'].nunique():,} unique movies"
 )
 
+tab_dist, tab_genre, tab_time, tab_top = st.tabs(
+    ["Genre distribution", "Genre satisfaction", "Ratings over time", "Top movies"]
+)
+
 # ---------- Tabs ----------
 with tab_dist:
     st.header("Genre mix among uniquely rated movies")
