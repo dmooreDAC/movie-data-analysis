@@ -1,0 +1,155 @@
+{
+  "overall_movie_mean": 3.08,
+  "rating_scale": [
+    1,
+    5
+  ],
+  "method": "mean of per-movie means; hybrids exploded",
+  "small_n_threshold": 30,
+  "genres": [
+    {
+      "genre": "Film-Noir",
+      "avg_rating": 3.55,
+      "n_movies": 24,
+      "n_ratings": 1733,
+      "delta_vs_overall": 0.47,
+      "small_n": true
+    },
+    {
+      "genre": "War",
+      "avg_rating": 3.49,
+      "n_movies": 71,
+      "n_ratings": 9398,
+      "delta_vs_overall": 0.41,
+      "small_n": false
+    },
+    {
+      "genre": "Musical",
+      "avg_rating": 3.38,
+      "n_movies": 56,
+      "n_ratings": 4954,
+      "delta_vs_overall": 0.3,
+      "small_n": false
+    },
+    {
+      "genre": "Mystery",
+      "avg_rating": 3.34,
+      "n_movies": 61,
+      "n_ratings": 5245,
+      "delta_vs_overall": 0.26,
+      "small_n": false
+    },
+    {
+      "genre": "Animation",
+      "avg_rating": 3.3,
+      "n_movies": 42,
+      "n_ratings": 3605,
+      "delta_vs_overall": 0.22,
+      "small_n": false
+    },
+    {
+      "genre": "Romance",
+      "avg_rating": 3.24,
+      "n_movies": 247,
+      "n_ratings": 19461,
+      "delta_vs_overall": 0.17,
+      "small_n": false
+    },
+    {
+      "genre": "Documentary",
+      "avg_rating": 3.23,
+      "n_movies": 50,
+      "n_ratings": 758,
+      "delta_vs_overall": 0.15,
+      "small_n": false
+    },
+    {
+      "genre": "Crime",
+      "avg_rating": 3.21,
+      "n_movies": 109,
+      "n_ratings": 8055,
+      "delta_vs_overall": 0.13,
+      "small_n": false
+    },
+    {
+      "genre": "Drama",
+      "avg_rating": 3.19,
+      "n_movies": 725,
+      "n_ratings": 39895,
+      "delta_vs_overall": 0.11,
+      "small_n": false
+    },
+    {
+      "genre": "Western",
+      "avg_rating": 3.19,
+      "n_movies": 27,
+      "n_ratings": 1854,
+      "delta_vs_overall": 0.11,
+      "small_n": true
+    },
+    {
+      "genre": "Sci-Fi",
+      "avg_rating": 3.17,
+      "n_movies": 101,
+      "n_ratings": 12730,
+      "delta_vs_overall": 0.09,
+      "small_n": false
+    },
+    {
+      "genre": "Adventure",
+      "avg_rating": 3.14,
+      "n_movies": 135,
+      "n_ratings": 13753,
+      "delta_vs_overall": 0.07,
+      "small_n": false
+    },
+    {
+      "genre": "Thriller",
+      "avg_rating": 3.14,
+      "n_movies": 251,
+      "n_ratings": 21872,
+      "delta_vs_overall": 0.06,
+      "small_n": false
+    },
+    {
+      "genre": "Comedy",
+      "avg_rating": 3.0,
+      "n_movies": 505,
+      "n_ratings": 29832,
+      "delta_vs_overall": -0.08,
+      "small_n": false
+    },
+    {
+      "genre": "Action",
+      "avg_rating": 2.97,
+      "n_movies": 251,
+      "n_ratings": 25589,
+      "delta_vs_overall": -0.11,
+      "small_n": false
+    },
+    {
+      "genre": "Children",
+      "avg_rating": 2.92,
+      "n_movies": 122,
+      "n_ratings": 7182,
+      "delta_vs_overall": -0.16,
+      "small_n": false
+    },
+    {
+      "genre": "Fantasy",
+      "avg_rating": 2.85,
+      "n_movies": 22,
+      "n_ratings": 1352,
+      "delta_vs_overall": -0.23,
+      "small_n": true
+    },
+    {
+      "genre": "Horror",
+      "avg_rating": 2.73,
+      "n_movies": 92,
+      "n_ratings": 5317,
+      "delta_vs_overall": -0.35,
+      "small_n": false
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "overall_movie_mean": 3.08,
+  "rating_scale": [
+    1,
+    5
+  ],
+  "x_axis": "movie_release_decade",
+  "method": "mean of per-movie means by release decade",
+  "small_n_threshold": 30,
+  "caveats": [
+    "Votes were collected around 1997-1998; this is not rating-behavior over calendar time.",
+    "Older decades are a survivor catalog; recent decades include more average titles."
+  ],
+  "decades": [
+    {
+      "decade": 1920,
+      "label": "1920s",
+      "avg_rating": 3.28,
+      "n_movies": 2,
+      "n_ratings": 56,
+      "delta_vs_overall": 0.2,
+      "small_n": true
+    },
+    {
+      "decade": 1930,
+      "label": "1930s",
+      "avg_rating": 3.72,
+      "n_movies": 29,
+      "n_ratings": 1496,
+      "delta_vs_overall": 0.64,
+      "small_n": true
+    },
+    {
+      "decade": 1940,
+      "label": "1940s",
+      "avg_rating": 3.47,
+      "n_movies": 45,
+      "n_ratings": 2249,
+      "delta_vs_overall": 0.4,
+      "small_n": false
+    },
+    {
+      "decade": 1950,
+      "label": "1950s",
+      "avg_rating": 3.62,
+      "n_movies": 57,
+      "n_ratings": 3527,
+      "delta_vs_overall": 0.55,
+      "small_n": false
+    },
+    {
+      "decade": 1960,
+      "label": "1960s",
+      "avg_rating": 3.56,
+      "n_movies": 46,
+      "n_ratings": 3909,
+      "delta_vs_overall": 0.49,
+      "small_n": false
+    },
+    {
+      "decade": 1970,
+      "label": "1970s",
+      "avg_rating": 3.33,
+      "n_movies": 55,
+      "n_ratings": 6448,
+      "delta_vs_overall": 0.26,
+      "small_n": false
+    },
+    {
+      "decade": 1980,
+      "label": "1980s",
+      "avg_rating": 3.33,
+      "n_movies": 109,
+      "n_ratings": 12833,
+      "delta_vs_overall": 0.25,
+      "small_n": false
+    },
+    {
+      "decade": 1990,
+      "label": "1990s",
+      "avg_rating": 2.98,
+      "n_movies": 1334,
+      "n_ratings": 69452,
+      "delta_vs_overall": -0.1,
+      "small_n": false
+    }
+  ]
+}

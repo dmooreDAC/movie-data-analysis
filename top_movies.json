@@ -1,0 +1,153 @@
+{
+  "rating_scale": [
+    1,
+    5
+  ],
+  "top_n": 5,
+  "method": "per-movie mean rating; ties broken by rating count",
+  "floors": [
+    {
+      "min_ratings": 50,
+      "n_qualifying_movies": 603,
+      "top": [
+        {
+          "rank": 1,
+          "title": "Close Shave, A (1995)",
+          "avg_rating": 4.49,
+          "n_ratings": 112,
+          "pct_five_star": 62.5,
+          "bayes_score": 4.194
+        },
+        {
+          "rank": 2,
+          "title": "Schindler's List (1993)",
+          "avg_rating": 4.47,
+          "n_ratings": 298,
+          "pct_five_star": 62.4,
+          "bayes_score": 4.332
+        },
+        {
+          "rank": 3,
+          "title": "Wrong Trousers, The (1993)",
+          "avg_rating": 4.47,
+          "n_ratings": 118,
+          "pct_five_star": 61.9,
+          "bayes_score": 4.187
+        },
+        {
+          "rank": 4,
+          "title": "Casablanca (1942)",
+          "avg_rating": 4.46,
+          "n_ratings": 243,
+          "pct_five_star": 58.0,
+          "bayes_score": 4.299
+        },
+        {
+          "rank": 5,
+          "title": "Wallace & Gromit: The Best of Aardman Animation (1996)",
+          "avg_rating": 4.45,
+          "n_ratings": 67,
+          "pct_five_star": 56.7,
+          "bayes_score": 4.055
+        }
+      ]
+    },
+    {
+      "min_ratings": 150,
+      "n_qualifying_movies": 203,
+      "top": [
+        {
+          "rank": 1,
+          "title": "Schindler's List (1993)",
+          "avg_rating": 4.47,
+          "n_ratings": 298,
+          "pct_five_star": 62.4,
+          "bayes_score": 4.332
+        },
+        {
+          "rank": 2,
+          "title": "Casablanca (1942)",
+          "avg_rating": 4.46,
+          "n_ratings": 243,
+          "pct_five_star": 58.0,
+          "bayes_score": 4.299
+        },
+        {
+          "rank": 3,
+          "title": "Shawshank Redemption, The (1994)",
+          "avg_rating": 4.45,
+          "n_ratings": 283,
+          "pct_five_star": 57.6,
+          "bayes_score": 4.308
+        },
+        {
+          "rank": 4,
+          "title": "Rear Window (1954)",
+          "avg_rating": 4.39,
+          "n_ratings": 209,
+          "pct_five_star": 51.2,
+          "bayes_score": 4.222
+        },
+        {
+          "rank": 5,
+          "title": "Usual Suspects, The (1995)",
+          "avg_rating": 4.39,
+          "n_ratings": 267,
+          "pct_five_star": 55.8,
+          "bayes_score": 4.251
+        }
+      ]
+    }
+  ],
+  "bayesian": {
+    "prior_votes": 50,
+    "prior_mean": 3.53,
+    "formula": "(v/(v+m))*R + (m/(v+m))*C",
+    "top": [
+      {
+        "rank": 1,
+        "title": "Schindler's List (1993)",
+        "avg_rating": 4.47,
+        "n_ratings": 298,
+        "pct_five_star": 62.4,
+        "bayes_score": 4.332
+      },
+      {
+        "rank": 2,
+        "title": "Shawshank Redemption, The (1994)",
+        "avg_rating": 4.45,
+        "n_ratings": 283,
+        "pct_five_star": 57.6,
+        "bayes_score": 4.308
+      },
+      {
+        "rank": 3,
+        "title": "Casablanca (1942)",
+        "avg_rating": 4.46,
+        "n_ratings": 243,
+        "pct_five_star": 58.0,
+        "bayes_score": 4.299
+      },
+      {
+        "rank": 4,
+        "title": "Star Wars (1977)",
+        "avg_rating": 4.36,
+        "n_ratings": 583,
+        "pct_five_star": 55.7,
+        "bayes_score": 4.293
+      },
+      {
+        "rank": 5,
+        "title": "Usual Suspects, The (1995)",
+        "avg_rating": 4.39,
+        "n_ratings": 267,
+        "pct_five_star": 55.8,
+        "bayes_score": 4.251
+      }
+    ]
+  },
+  "caveats": [
+    "Votes were collected around 1997-1998; scores reflect that audience.",
+    "Older titles are a survivor catalog; people mostly rate classics they expect to like."
+  ]
+}
