@@ -72,6 +72,62 @@ with st.expander("🔎 Filters", expanded=False):
         help="Drop movies with fewer than this many ratings.",
     )
 
+    # Ratings over time chart decade controls
+    bucket = st.radio(
+        "Time bucket",
+        options=["Decade (+10)", "5 years (+5)", "Year (+1)"],
+        index=0,
+        horizontal=True,
+        help="How the 'ratings over time' chart groups release years.",
+    )
+
+BUCKET_STEPS = {"Decade (+10)": 10, "5 years (+5)": 5, "Year (+1)": 1}
+step = BUCKET_STEPS[bucket]
+
+def ratings_by_release_bucket(
+    ratings: pd.DataFrame, step: int, small_n_threshold: int = 30
+) -> tuple[pd.DataFrame, float]:
+    """Same logic as ratings_by_release_decade, but with a configurable bucket size."""
+    movies = (
+        ratings.groupby("movie_id", as_index=False)
+        .agg(
+            avg_rating=("rating", "mean"),
+            n_ratings=("rating", "size"),
+            year=("year", "first"),
+        )
+    )
+    movies = movies.dropna(subset=["year"])
+    movies["year"] = movies["year"].astype(int)
+    movies = movies[movies["year"] > 1800].copy()
+
+    # Bucket start year: floor(year / step) * step
+    movies["bucket"] = (movies["year"] // step) * step
+
+    overall_movie_mean = float(movies["avg_rating"].mean())
+
+    by_bucket = (
+        movies.groupby("bucket", as_index=False)
+        .agg(
+            avg_rating=("avg_rating", "mean"),
+            n_movies=("movie_id", "nunique"),
+            n_ratings=("n_ratings", "sum"),
+        )
+        .sort_values("bucket", kind="mergesort")
+        .reset_index(drop=True)
+    )
+    by_bucket["delta_vs_overall"] = by_bucket["avg_rating"] - overall_movie_mean
+    by_bucket["small_n"] = by_bucket["n_movies"] < small_n_threshold
+    by_bucket["label"] = by_bucket["bucket"].map(lambda b: _bucket_label(b, step))
+    return by_bucket, overall_movie_mean
+
+
+def _bucket_label(start: int, step: int) -> str:
+    if step == 1:
+        return str(start)
+    if step == 10:
+        return f"{start}s"
+    return f"{start}–{start + step - 1}"
+
 # ---------- Apply the filter ----------
 # Filter movie-level first so we don't drop ratings mid-movie
 movie_counts = ratings.groupby("movie_id")["rating"].size().rename("n_ratings")
@@ -189,17 +245,17 @@ with tab_genre:
 
 # ========== 3. Ratings over time ==========
 with tab_time:
-    st.header("Ratings over time: satisfaction by release decade")
+    st.header("Ratings over time: satisfaction by release period")
     for caveat in CAVEATS:
         st.warning(caveat)
 
-    by_decade, overall_movie_mean = ratings_by_release_decade(filtered)
+    by_bucket, overall_movie_mean = ratings_by_release_bucket(filtered, step)
 
-    if by_decade.empty:
-        st.warning("No decades in the selected year range. Widen the filter above.")
+    if by_bucket.empty:
+        st.warning("No buckets in the selected year range. Widen the filter above.")
         st.stop()
 
-    plot_df = by_decade.copy()
+    plot_df = by_bucket.copy()
     plot_df["reliability"] = plot_df["small_n"].map(
         {True: "small n (< 30)", False: "reliable"}
     )
@@ -254,25 +310,25 @@ with tab_time:
         annotation_font_color="#c45c26",
     )
 
-    # KEY: constrain x-axis to only the decades present in the filtered data
     fig.update_layout(
         yaxis=dict(range=[2.5, 4.0], title="Average movie rating (1–5)"),
         xaxis=dict(
-            title="Movie release decade",
+            title="Movie release period",
             categoryorder="array",
-            categoryarray=list(plot_df["label"]),  # only the surviving decades
+            categoryarray=list(by_bucket["label"]),
             type="category",
         ),
         margin=dict(l=0, r=0, t=30, b=0),
         height=500,
         hovermode="x unified",
-        transition=dict(duration=300),  # smooth re-render on filter change
+        transition=dict(duration=300),
     )
     st.plotly_chart(fig, use_container_width=True)
 
+    step_names = {10: "decades", 5: "5-year bins", 1: "single years"}
     st.caption(
-        f"Showing {len(plot_df)} decade{'s' if len(plot_df) != 1 else ''} "
-        f"({plot_df['label'].iloc[0]}–{plot_df['label'].iloc[-1]}). "
+        f"Showing {len(by_bucket)} {step_names[step]} "
+        f"({by_bucket['label'].iloc[0]}–{by_bucket['label'].iloc[-1]}). "
         "Marker size reflects the number of titles. "
         "* / lighter markers: fewer than 30 titles."
     )
