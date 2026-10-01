@@ -6,8 +6,8 @@ import pandas as pd
 
 from movies import DATA_PATH, explode_genres
 
-CHART_PATH = Path(__file__).resolve().parent / "genre_satisfaction.png"
-JSON_PATH = Path(__file__).resolve().parent / "genre_satisfaction.json"
+CHART_PATH = Path(__file__).resolve().parent / "png" / "genre_satisfaction.png"
+JSON_PATH = Path(__file__).resolve().parent / "json" / "genre_satisfaction.json"
 SMALL_N_THRESHOLD = 30
 RATING_SCALE = [1, 5]
 

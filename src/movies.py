@@ -3,8 +3,8 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 
-DATA_PATH = Path(__file__).resolve().parent / "movie_ratings.csv"
-CHART_PATH = Path(__file__).resolve().parent / "genre_distribution.png"
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "movie_ratings.csv"
+CHART_PATH = Path(__file__).resolve().parent / "png" / "genre_distribution.png"
 INVALID_GENRES = frozenset({"", "(no genres listed)", "unknown"})
 
 

@@ -6,8 +6,8 @@ import pandas as pd
 
 from movies import DATA_PATH
 
-CHART_PATH = Path(__file__).resolve().parent / "top_movies.png"
-JSON_PATH = Path(__file__).resolve().parent / "top_movies.json"
+CHART_PATH = Path(__file__).resolve().parent / "png" / "top_movies.png"
+JSON_PATH = Path(__file__).resolve().parent / "json" / "top_movies.json"
 RATING_SCALE = [1, 5]
 FLOORS = [50, 150]
 TOP_N = 5

@@ -6,8 +6,8 @@ import pandas as pd
 
 from movies import DATA_PATH
 
-CHART_PATH = Path(__file__).resolve().parent / "ratings_over_time.png"
-JSON_PATH = Path(__file__).resolve().parent / "ratings_over_time.json"
+CHART_PATH = Path(__file__).resolve().parent / "png" / "ratings_over_time.png"
+JSON_PATH = Path(__file__).resolve().parent / "json" / "ratings_over_time.json"
 SMALL_N_THRESHOLD = 30
 RATING_SCALE = [1, 5]
 CAVEATS = [
